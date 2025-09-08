@@ -189,7 +189,7 @@ public class IT2A_Group8_Lab2 {
         return index;
     }
 
-    // Display Array Method (Not yet fully fixed - just for testing)
+    // Display Array Method 
     public static void displayArray() {
         if (!isArrayCreated) {
             System.out.println("Error: You must create an array first.\n");
@@ -202,10 +202,16 @@ public class IT2A_Group8_Lab2 {
             scanner.nextLine();
             return;
         }
-
-        System.out.print("\nArray elements: ");
+        int charCounter = 0;
+        System.out.println("\nArray elements: ");
         for (int i = 0; i < currentSize; i++) {
-            System.out.print(arr[i] + " ");
+            if (arr[i] < 10) System.out.print("  " + arr[i] );
+            else System.out.print(" " + arr[i]);
+            charCounter++;
+            if (charCounter == 5) {
+                System.out.println();
+                charCounter = 0;
+            }
         }
 
         System.out.print("\n\nPress Enter to Continue...");
