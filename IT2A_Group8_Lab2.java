@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class IT2A_Group8_Lab2 {
     static Scanner scanner = new Scanner(System.in);
-    static int[] arr = null; // reference to the array
+    static Integer[] arr = null; // reference to the array
     static boolean isArrayCreated = false; // variable to track if array exists
     static int currentSize = 0; // tracks how many elements are actually stored
 
@@ -111,7 +111,7 @@ public class IT2A_Group8_Lab2 {
                 continue; // keep looping until valid
             }
 
-            arr = new int[size];
+            arr = new Integer[size];
             isArrayCreated = true;
             System.out.println("Array of size " + size + " has been created successfully!\n");
 
@@ -129,8 +129,8 @@ public class IT2A_Group8_Lab2 {
             return;
         }
 
-        if (currentSize == arr.length) {
-            System.out.println("Error: The array is already full. You cannot insert more elements.\n");
+        if (currentSize == arr.length && arr[arr.length - 1] != -99) {
+            System.out.println("The array is already full. You cannot insert more elements.\n");
             return;
         }
 
@@ -153,9 +153,11 @@ public class IT2A_Group8_Lab2 {
             }
 
             if (currentSize < arr.length) {
+
                 arr[currentSize] = value; // insert at the next available slot
                 System.out.println("Inserted " + value + " at position " + currentSize + ".");
                 currentSize++;
+
             } else {
                 System.out.println("Error: The array is already full. You cannot insert more elements.\n");
                 break;
@@ -189,7 +191,7 @@ public class IT2A_Group8_Lab2 {
         return index;
     }
 
-    // Display Array Method 
+    // Display Array Method
     public static void displayArray() {
         if (!isArrayCreated) {
             System.out.println("Error: You must create an array first.\n");
@@ -205,8 +207,7 @@ public class IT2A_Group8_Lab2 {
         int charCounter = 0;
         System.out.println("\nArray elements: ");
         for (int i = 0; i < currentSize; i++) {
-            if (arr[i] < 10) System.out.print("  " + arr[i] );
-            else System.out.print(" " + arr[i]);
+            System.out.printf((arr[i] == -99) ? " " : "%5d ", arr[i]);
             charCounter++;
             if (charCounter == 5) {
                 System.out.println();
@@ -221,40 +222,28 @@ public class IT2A_Group8_Lab2 {
 
     public static void deleteElement() {
         Integer elementRemoved = null;
-        if (currentSize <= 5) {
-            System.out.println("Error: Cannot delete any more elements. Minimmun array size should be 5");
-        } else {
-            while (elementRemoved == null ) {
-                System.out.print("\nEnter element to delete: ");
-                elementRemoved = getValidatedInput();
+
+        while (elementRemoved == null) {
+            System.out.print("\nEnter element to delete: ");
+            elementRemoved = getValidatedInput();
+        }
+
+        if (contains(elementRemoved)) {
+
+            for (int i = indexOf(elementRemoved); i < arr.length - 1; i++) {
+                arr[i] = arr[i + 1];
             }
 
-            if (contains(elementRemoved)) {
+            arr[arr.length - 1] = -99;
+            currentSize--;
 
-                int[] newArr = new int[arr.length - 1];
+            System.out.printf("Succesfully deleted element \"%d\" \n", elementRemoved);
 
-                // ex. arr [1, 2, 3, 4, 5], user wants to delete element "3", its index is
-                // fetched by indexOf(int element)
-                // copy the elements BEFORE the index of the element to be removed [1,2] into
-                // newArr
-                System.arraycopy(arr, 0, newArr, 0, indexOf(elementRemoved));
+            System.out.print("\nPress Enter to Continue...");
+            scanner.nextLine();
 
-                // copy the elements AFTER the index of the element to be removed [4,5] into
-                // newArr
-                System.arraycopy(arr, indexOf(elementRemoved) + 1, newArr, indexOf(elementRemoved),
-                        arr.length - indexOf(elementRemoved) - 1);
-
-                // update arr and currentSize
-                arr = newArr;
-                currentSize = newArr.length;
-                System.out.printf("Succesfully deleted element \"%d\" \n", elementRemoved);
-
-                System.out.print("\nPress Enter to Continue...");
-                scanner.nextLine();
-
-            } else
-                System.out.println("Error: Element not found.");
-        }
+        } else
+            System.out.println("Error: Element not found.");
     }
 
     public static void searchElement() {
