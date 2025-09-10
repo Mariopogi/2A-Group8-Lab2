@@ -228,33 +228,26 @@ public class IT2A_Group8_Lab2 {
             return;
         }
 
-        while (true) {
-            Integer elementRemoved = null;
+        Integer elementRemoved = null;
 
-            while (elementRemoved == null) {
-                System.out.print("\nEnter element to delete: ");
-                elementRemoved = getValidatedInput();
-            }
-
-            if (contains(elementRemoved)) {
-                for (int i = indexOf(elementRemoved); i < arr.length - 1; i++) {
-                    arr[i] = arr[i + 1];
-                }
-                arr[arr.length - 1] = -99;
-                currentSize--;
-
-                System.out.printf("Succesfully deleted element \"%d\" \n", elementRemoved);
-                System.out.print("\nPress Enter to Continue...");
-                scanner.nextLine();
-                break; // exit the loop after successful deletion
-            } else if (elementRemoved == -99) {
-                System.out.println("Going back to main menu.\n");
-                break;
-            } else {
-                System.out.println("Error: Element not found.");
-                // Loop again to prompt for input
-            }
+        while (elementRemoved == null) {
+            System.out.print("\nEnter element to delete: ");
+            elementRemoved = getValidatedInput();
         }
+
+        if (contains(elementRemoved)) {
+            for (int i = indexOf(elementRemoved); i < arr.length - 1; i++) {
+                arr[i] = arr[i + 1];
+            }
+            arr[arr.length - 1] = -99;
+            currentSize--;
+
+            System.out.printf("Succesfully deleted element \"%d\" \n", elementRemoved);
+            System.out.print("\nPress Enter to Continue...");
+            scanner.nextLine();
+        } else {
+            System.out.println("Error: Element not found.");
+        }   
     }
 
     public static void searchElement() {
