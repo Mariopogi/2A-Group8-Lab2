@@ -114,6 +114,10 @@ public class IT2A_Group8_Lab2 {
             arr = new Integer[size];
             isArrayCreated = true;
             System.out.println("Array of size " + size + " has been created successfully!\n");
+            
+            for (int i = 0; i < arr.length; i++){
+                if(arr[i] == null) arr[i] = -99;
+            }
 
             System.out.print("\nPress Enter to Continue...");
             scanner.nextLine();
